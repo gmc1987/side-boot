@@ -10,9 +10,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.side.basic.SideException.SideCustException;
@@ -28,7 +30,7 @@ import com.side.users.pojo.SideUser;
  * 
  */
 
-@Controller
+@RestController
 @RequestMapping("/menu")
 public class SideMenuController {
 	
@@ -40,8 +42,7 @@ public class SideMenuController {
 	@Autowired
 	private ISideUserService sideUserService;
 	
-	@RequestMapping("search")
-	@ResponseBody
+	@GetMapping("search")
 	public Map<String, Object> findMenus(MenuDto dto){
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<SideMenus> mode;
@@ -64,8 +65,7 @@ public class SideMenuController {
 		
 	}
 	
-	@RequestMapping("editMenuService")
-	@ResponseBody
+	@PutMapping("editMenuService")
 	public Map<String, Object> menuEdit(MenuDto dto){
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<SideMenus> mode;
@@ -101,8 +101,7 @@ public class SideMenuController {
 		}
 	}
 	
-	@RequestMapping("delMenuService")
-	@ResponseBody
+	@DeleteMapping("delMenuService")
 	public Map<String, Object> menuDelete(MenuDto dto){
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {

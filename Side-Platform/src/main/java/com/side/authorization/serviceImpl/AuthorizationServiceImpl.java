@@ -56,6 +56,7 @@ public class AuthorizationServiceImpl extends SideBasicServiceImpl<SideAuthoriza
 			criteria.getCriteria().createAlias("menuId", "menu");
 			criteria.add(Restrictions.eqOrIsNull("roleId", role));
 			criteria.addOrder(Order.asc("menu.menuSort"));
+			criteria.addOrder(Order.asc("menu.isParent"));
 			authorizations = authorizationDao.findAll(criteria);
 		}
 		return authorizations;

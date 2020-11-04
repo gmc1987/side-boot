@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.side.authorization.IService.IAuthorizationService;
 import com.side.authorization.pojo.SideAuthorization;
+import com.side.basic.constant.SideConstant;
+import com.side.basic.dto.ResultDto;
 import com.side.menus.IService.ISideMenuService;
 import com.side.menus.pojo.SideMenus;
 import com.side.users.IService.ISideUserService;
@@ -59,11 +61,14 @@ public class IndexController {
 	}
 	
 	@RequestMapping("/getChildParentMenus")
-	public List<SideMenus> getChildMenuByParent(@RequestParam("parentId") int parentId){
+	public ResultDto<SideMenus> getChildMenuByParent(@RequestParam("parentId") int parentId){
+		ResultDto<SideMenus> result = null;
 		try {
-			return sideMenuService.getChildByParentId(parentId);
+			result = new ResultDto<SideMenus>(SideConstant.SUCCESS, SideConstant.SUCCESS_MSG, sideMenuService.getChildByParentId(parentId));
+			return result;
 		} catch(Exception e) {
-			return null;
+			result = new ResultDto<SideMenus>(SideConstant.FAIL, SideConstant.FAIL_MSG);
+			return result;
 		}
 	}
 	

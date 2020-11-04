@@ -14,6 +14,32 @@ import com.side.basic.common.utils.PageMode;
  * @see 数据返回对象，用于返回后端数据对象
  */ 
 public class ResultDto<T> implements Serializable {
+	
+	public ResultDto(){}
+	
+	public ResultDto(String retCode, String retMsg, List<T> record, PageMode<T> pageMode) {
+		this.retCode = retCode;
+		this.retMsg = retMsg;
+		this.record = record;
+		this.pageMode = pageMode;
+	}
+	
+	public ResultDto(String retCode, String retMsg, List<T> record) {
+		this.retCode = retCode;
+		this.retMsg = retMsg;
+		this.record = record;
+	}
+	
+	public ResultDto(String retCode, String retMsg, PageMode<T> pageMode) {
+		this.retCode = retCode;
+		this.retMsg = retMsg;
+		this.pageMode = pageMode;
+	}
+	
+	public ResultDto(String retCode, String retMsg) {
+		this.retCode = retCode;
+		this.retMsg = retMsg;
+	}
 
 	/**
 	 * 

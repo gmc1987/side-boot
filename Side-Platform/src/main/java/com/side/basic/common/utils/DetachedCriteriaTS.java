@@ -7,11 +7,11 @@ import java.io.Serializable;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
+import org.hibernate.transform.Transformers;
 
 
 /**
@@ -80,8 +80,8 @@ public class DetachedCriteriaTS<T> implements Serializable{
 		return criteria.getExecutableCriteria(session);
 	}
 	
-	public DetachedCriteria setResultTransformer() {
-		return criteria.setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP);
+	public DetachedCriteria setResultTransformer(Class<T> clazz) {
+		return criteria.setResultTransformer(Transformers.aliasToBean(clazz));
 	}
 	
 }
