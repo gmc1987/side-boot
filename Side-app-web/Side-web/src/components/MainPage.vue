@@ -32,7 +32,7 @@
         <li>
           <a href="#">
             <div class="fs1" aria-hidden="true" :data-icon="icon1"></div>
-           
+
           </a>
         </li>
         <li>
@@ -68,7 +68,7 @@
     		</div>
     	</div>
     </div>
-    
+
     <footer>
       <p>
         &copy; gmc 2018
@@ -119,8 +119,23 @@
 			});
 		},
 		methods : {
-				navigationBarSelect: function(menuId, index){
-					
+				navigationBarSelect: function(menu, index){
+            this.$data.parentSelectIndex = index;
+            let _this = this;
+            this.axios({
+            	method : 'get',
+              params : {'parentId' : menu.menuId},
+            	url : '/side/getChildParentMenus'
+            }).then(function(response){
+            	if(response.data.retCode == "0000"){
+            		if(response.data.record != null){
+            			_this.$data.childMenuArray = response.data.record;
+                  _this.subNavigationBarSelect(0);
+            		}
+            	}
+            }).catch(function(response){
+            	_this.$alertify.error("查询发送异常，请联系管理员");
+            });
 				},
 				subNavigationBarSelect: function(index){
 					this.$data.childSelectIndex = index;
@@ -129,12 +144,12 @@
 						this.router.replace({
 							path: menu.menuPath
 						});
-						
+
 					} else {
 						this.$alertify.error("菜单数据异常");
 						return;
 					}
-					
+
 				}
 		}
 	}

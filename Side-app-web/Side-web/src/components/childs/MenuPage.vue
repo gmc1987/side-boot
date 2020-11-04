@@ -111,7 +111,7 @@
 				<div class="clearfix"></div>
 			</div>
 		</div>
-		
+
 		<!-- 新增编辑弹出框 -->
 		<div class="modal hide fade" id="parentModal" tabindex="-1" style="display: none;" role="dialog" aria-labelledby="parentModalLabel">
 			<div class="widget no-margin" role="document">
@@ -194,7 +194,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- 菜单图标选择框 -->
 		<div class="modal-max hide fade" id="iconModal" style="display: none; height: 600px;overflow:auto;" tabindex="-1" role="dialog" aria-labelledby="iconModalLabel">
 			<div class="widget no-margin" role="document">
@@ -216,7 +216,7 @@
 				</div>
 			</div>
 		</div>
-	</div>	
+	</div>
 	</div>
 </template>
 
@@ -297,7 +297,7 @@
 				}).catch(response => {
 					this.$alertify.error("查询发送异常，请联系管理员");
 				});
-				
+
 			},
 			childSelect : function(){
 				let _this = this;
@@ -320,7 +320,7 @@
 					this.$alertify.error("查询发送异常，请联系管理员");
 				});
 			},
-			select : function(menuId, event){//父级菜单选择触发事件	
+			select : function(menuId, event){//父级菜单选择触发事件
 				let _this = this;
 				_this.parentId = menuId;
 				_this.menuName = event.currentTarget.lastChild.innerText;
@@ -391,7 +391,7 @@
 							$(".alertify").css("display", "none");
 							//发送请求
 							this.axios({
-								method : 'get',
+								method : 'delete',
 								url : '/side/menu/delMenuService',
 								params : _this.menuObject
 							}).then(response => {
@@ -465,7 +465,7 @@
 							$(".alertify").css("display", "none");
 							//发送请求
 							this.axios({
-								method : 'get',
+								method : 'delete',
 								url : '/side/menu/delMenuService',
 								params : _this.menuObject
 							}).then(response => {
@@ -497,7 +497,7 @@
 				}
 				//发送请求
 				this.axios({
-					method : 'get',
+					method : 'put',
 					url : '/side/menu/editMenuService',
 					params : this.menuObject
 				}).then(function(response){
@@ -521,7 +521,7 @@
 				}).catch(response => {
 					this.$alertify.error("查询发送异常，请联系管理员");
 				});
-				
+
 			},
 			//图标选择事件
 			iconSelect: function(e){

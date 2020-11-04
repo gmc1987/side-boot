@@ -2,7 +2,7 @@
 	<div class="container-fluid" align="center" id="login">
 		<div style="width:620px;height:320px;">
 		<div align="center" style="width:600px;height:250px;"></div>
-		<div style="padding:10px 10px 10px 10px" align="center" class="sign-in-container"> 
+		<div style="padding:10px 10px 10px 10px" align="center" class="sign-in-container">
 			<form id="loginForm" action="login" method="post" class="form-horizontal login-wrapper">
 				<div class="header">
                   <div class="row-fluid">
@@ -11,7 +11,7 @@
                     </div>
                   </div>
 				</div>
-				
+
 				<div class="content">
 					<div class="row-fluid">
 					    <div class="span12">
@@ -25,7 +25,7 @@
 					    </div>
 					</div>
 				</div>
-				
+
 				<div class="actions">
 					<button type="button" class="btn btn-warning2" v-on:click="dologin">Sign in</button>
 			      	<a class="link" href="#">Forgot Password?</a>
@@ -57,7 +57,8 @@
 					method : 'post',
 					data : {
 						username : this.usercode,
-						password : _this.jsEncrypt.encrypt(this.pwd)
+						password : _this.jsEncrypt.encrypt(this.pwd),
+					    client_secret :_this.jsEncrypt.encrypt("secret")
 					},
 					url : '/auth-center/oauth/token'
 				}).then(function(response){

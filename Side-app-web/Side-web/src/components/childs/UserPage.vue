@@ -86,7 +86,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<!-- 新增编辑弹出框 -->
 			<div class="modal hide fade" id="userModal" tabindex="-1" style="display: none; " role="dialog" aria-labelledby="userModalLabel">
 				<div class="widget no-margin" role="document">
@@ -100,7 +100,7 @@
 						<form class="form-horizontal no-margin">
 	                      <div class="tab-content" id="myTabContent">
 	                        <div id="step1" class="tab-pane fade active in">
-	                          
+
 	                          <div class="control-group">
 	                            <label class="control-label" for="userCode">
 	                              User Code
@@ -129,7 +129,7 @@
 	                            	 </select>
 	                            </div>
 	                          </div>
-	                          
+
 	                          <hr>
 	                        </div>
 	                        <div id="step2" class="tab-pane fade">
@@ -172,7 +172,7 @@
 	                              </label>
 	                            </div>
 	                          </div>
-	                          
+
 	                          <div class="control-group">
 	                            <label class="control-label" for="birthday">
 	                               Date of birth
@@ -206,8 +206,20 @@
 	                            	 	<option value="2">冻结</option>
 	                            	 </select>
 	                            </div>
+
 	                          </div>
-		                          
+                            <div>
+                                <label class="control-label" for="userStatus">
+                                  Is System User
+                                </label>
+                                <div class="controls">
+                                	 <select id="accStatus" v-model="sideUser.isSystemUser">
+                                	 	<option value="0">是</option>
+                                	 	<option value="1" selected>否</option>
+                                	 </select>
+                                </div>
+                            </div>
+
 	                          <hr>
 	                        </div>
 	                        <div class="next-prev-btn-container pull-right" style="margin-right: 10px;">
@@ -228,7 +240,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<!--
             	作者：Cat_870223@126.com
             	时间：2019-08-23
@@ -262,7 +274,7 @@
 					</div>
             		</div>
             </div>
-			
+
 		</div>
 	</div>
 </template>
@@ -280,7 +292,7 @@
 				userInfo : {
 					userId : "",
 					userName : "",
-					userCode : "", 
+					userCode : "",
 					userStatus : "",
 					searchKey : ""
 				},
@@ -313,7 +325,7 @@
 			this.axios({
 				method : "get",
 				url : '/side/users/getUserList',
-				params : {dto : _this.userInfo, pageNumber : 1, pageSize : 10}
+				params : {dto : _this.userInfo, pageNumber : _this.pageNumber, pageSize : _this.pageSize}
 			}).then(response => {
 				_this.$data.userList = response.data.pageMode.records;
 				_this.$data.pageCount = response.data.pageMode.pageCount;
@@ -451,7 +463,7 @@
 					}).catch(function(response){
 						_this.$alertify.error("查询发送异常，请联系管理员");
 					});
-					
+
 					$("#userRoleModal").modal("show");
 				}
 			},
@@ -461,7 +473,7 @@
 				} else {
 					this.roleList[index].ischoose = true;
 				}
-				
+
 			},
 			roleSet : function(){
 				let _this = this;
@@ -488,7 +500,7 @@
 				}).catch(function(response){
 					_this.$alertify.error("查询发送异常，请联系管理员");
 				});
-				
+
 			},
 			save : function(){
 				let _this = this;
@@ -568,7 +580,7 @@
 				} else {
 					this.$alertify.success("已经是第一页");
 				}
-				
+
 			},
 			toLast : function(){
 				if(this.hasNextPage){
@@ -577,7 +589,7 @@
 				} else {
 					this.$alertify.success("已经是最后一页");
 				}
-				
+
 			},
 			toNext : function(){
 				if(this.hasNextPage){

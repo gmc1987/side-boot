@@ -6,6 +6,8 @@ import MenuPage from '@/components/childs/MenuPage'
 import RolePage from '@/components/childs/RolePage'
 import AuthorizationPage from '@/components/childs/AuthorizationPage'
 import UserPage from '@/components/childs/UserPage'
+import TenantPage from '@/components/childs/TenantPage'
+import TenantPageAudit from '@/components/childs/TenantPageAudit'
 import store from '../store/store'
 import * as types from '../store/types'
 
@@ -43,7 +45,17 @@ const routes = [
 	    			path: 'users',
 	    			name: 'users',
 	    			component: UserPage
-	    		}
+	    		},
+				{
+					path: 'tenanies/list',
+					name: 'tenanies/list',
+					component: TenantPage
+				},
+        {
+        	path: 'tenant/audit/list',
+        	name: 'tenant/audit/list',
+        	component: TenantPageAudit
+        }
     		]
     }
 ];
@@ -76,4 +88,3 @@ router.beforeEach((to, from, next) => {
 });
 
 export default router;
-
