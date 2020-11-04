@@ -81,10 +81,6 @@ public class UserController extends SideBaseController {
 				user.setLastUpdateDate(new Date());
 				user.getAccount().setLastUpdateBy(user.getCreateBy());
 				user.getAccount().setLastUpdateDate(new Date());
-//				user.setCreateBy(getUserInfo().getUser().getUserId());
-//				user.setCreateDate(new Date());
-//				user.getAccount().setCreateBy(user.getCreateBy());
-//				user.getAccount().setCreateDate(new Date());
 				String password = user.getAccount().getAccPassword();
 				if(StringUtils.isNotEmpty(password) && password.length() < 60) {
 					user.getAccount().setAccPassword(new BCryptPasswordEncoder().encode(password));

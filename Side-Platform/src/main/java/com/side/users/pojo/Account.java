@@ -17,6 +17,7 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -48,7 +49,7 @@ public class Account implements Serializable {
 	@Column(length=100, nullable=false)
 	private String accName;
 	
-//	@JsonIgnore
+	@JsonIgnore
 	@Column(length=100, nullable=false)
 	private String accPassword;
 	
@@ -80,6 +81,9 @@ public class Account implements Serializable {
 	
 	@Column(nullable=false)
 	private Integer accStatus;
+	
+	@Transient
+	private String isFemale;
 
 	public String getAccCode() {
 		return accCode;
@@ -119,6 +123,11 @@ public class Account implements Serializable {
 
 	public void setAccSex(Character accSex) {
 		this.accSex = accSex;
+		if(accSex == 'F') {
+			this.isFemale = "女";
+		}else {
+			this.isFemale = "男";
+		}
 	}
 
 	public Date getAccBirthday() {
@@ -183,6 +192,19 @@ public class Account implements Serializable {
 
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
+	}
+
+	public String getIsFemale() {
+		if(this.getAccSex() == 'F') {
+			isFemale = "女";
+		} else {
+			isFemale = "男";
+		}
+		return isFemale;
+	}
+
+	public void setIsFemale(String isFemale) {
+		this.isFemale = isFemale;
 	}
 	
 }

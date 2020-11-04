@@ -58,4 +58,11 @@ public interface ISideUserService extends ISideBasicService<SideUser>{
 	 */
 	public PageMode<SideUserDto> findSystemUserBySQL(SideUserDto dto, int pageNumber, int pageSize) throws Exception;
 	
+	/**
+	 * 用户注册
+	 * @param user
+	 * @throws Exception
+	 */
+	public void userRegist(SideUser user) throws Exception;
+	
 }

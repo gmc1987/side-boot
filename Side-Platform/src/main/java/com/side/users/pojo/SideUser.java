@@ -80,6 +80,9 @@ public class SideUser implements Serializable {
 	@Column(nullable=false)
 	private Integer userStatus;
 	
+	@Column(nullable=false)
+	private Integer isSystemUser;
+	
 	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
  	@JoinColumn(name="account", insertable=true, nullable=true)
 	private Account account;
@@ -155,5 +158,13 @@ public class SideUser implements Serializable {
 
 	public void setUserStatus(Integer userStatus) {
 		this.userStatus = userStatus;
+	}
+
+	public Integer getIsSystemUser() {
+		return isSystemUser;
+	}
+
+	public void setIsSystemUser(Integer isSystemUser) {
+		this.isSystemUser = isSystemUser;
 	}
 }

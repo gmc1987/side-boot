@@ -9,18 +9,23 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import org.springframework.transaction.annotation.Transactional;
 
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import com.mysql.jdbc.StringUtils;
+import com.side.authorization.IDao.IUserRoleDao;
+import com.side.authorization.pojo.SideUserRole;
 import com.side.basic.baseServiceImpl.SideBasicServiceImpl;
 import com.side.basic.common.utils.DetachedCriteriaTS;
 import com.side.basic.common.utils.PageMode;
+import com.side.role.IRoleDao.IRoleDao;
+import com.side.role.pojo.SideRole;
 import com.side.users.IDao.ISideAccountDao;
 import com.side.users.IDao.ISideUserDao;
 import com.side.users.IService.ISideUserService;
@@ -41,6 +46,12 @@ public class SideUserServiceImpl extends SideBasicServiceImpl<SideUser> implemen
 	
 	@Resource
 	private ISideAccountDao sideAccountDao;
+	
+	@Resource
+	private IRoleDao roleDao;
+	
+	@Resource
+	private IUserRoleDao userRoleDao;
 	
 	@Override
 	public SideUser findSideUserByCode(String code) {
@@ -170,6 +181,29 @@ public class SideUserServiceImpl extends SideBasicServiceImpl<SideUser> implemen
 		pageMode = sideUserDao.findBySQL(sb.toString(), params, pageNumber, pageSize, SideUserDto.class);
 		
 		return pageMode;
+	}
+
+	@Override
+	@Transactional
+	public void userRegist(SideUser user) throws Exception {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		if (ObjectUtils.isEmpty(user)) {
+			throw new Exception("参数异常:[user]为空");
+		}
+		String tmpPwd = user.getAccount().getAccPassword();
+		user.getAccount().setAccPassword(encoder.encode(tmpPwd));
+		sideUserDao.saveOrUpdate(user);
+		
+		DetachedCriteriaTS<SideUser> criteria = new DetachedCriteriaTS<SideUser>(SideUser.class);
+		DetachedCriteriaTS<SideRole> roleCriteria = new DetachedCriteriaTS<SideRole>(SideRole.class);
+		criteria.add(Restrictions.eq("userCode", user.getUserCode()));
+		roleCriteria.add(Restrictions.eq("roleCode", "tenant"));
+		SideUser newUser = sideUserDao.find(criteria);
+		SideRole role = roleDao.find(roleCriteria);
+		SideUserRole userRole = new SideUserRole();
+		userRole.setUserId(newUser);
+		userRole.setRoleId(role);
+		userRoleDao.saveOrUpdate(userRole);
 	}
 
 
